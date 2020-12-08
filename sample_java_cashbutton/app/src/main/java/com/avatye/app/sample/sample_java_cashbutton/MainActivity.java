@@ -22,11 +22,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LinearLayout ly_inquire_container;
     private Switch sw_notibar_state, sw_cashbutton_notibar_state;
+//    private Switch sw_cashbutton_state;
 
     private CashButtonLayout cashButton;
 
-    Runnable notibarRunnable;
-    Runnable cashbuttonAndNotibarRunnable;
+    private Runnable notibarRunnable;
+    private Runnable cashbuttonAndNotibarRunnable;
+//    private Runnable cashbuttonRunnable;
+
+
+    private Boolean isCashButtonState = CashButtonConfig.getCashButtonState();
 
     @Override
     public void onBackPressed() {
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ly_inquire_container = findViewById(R.id.ly_inquire_container);
         sw_notibar_state = findViewById(R.id.sw_notibar_state);
         sw_cashbutton_notibar_state = findViewById(R.id.sw_cashbutton_notibar_state);
+//        sw_cashbutton_state = findViewById(R.id.sw_cashbutton_state);
         // endregion
 
         // region { init CashButton }
@@ -71,6 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sw_cashbutton_notibar_state.setOnCheckedChangeListener(this);
         // endregion
 
+        // region { 캐시버튼 설정 }
+//        sw_cashbutton_state.setOnCheckedChangeListener(this);
+        // endregion
+
+
     }
 
 
@@ -86,8 +97,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         });
 
-        CashButtonLayout.initInviteInfo("캐시 버튼에서 친구 초대를 사용할 때 사용하는 메시지입니다.");
-        sw_cashbutton_notibar_state.setChecked(CashButtonConfig.getCashButtonState());
+        // region {친구초대 메시지 (커스타미이징)}
+        CashButtonConfig.initInviteInfo("캐시 버튼에서 친구 초대를 사용할 때 사용하는 메시지입니다.");
+        // endregion
+
+        // default
+        sw_notibar_state.setChecked(false);
+        sw_cashbutton_notibar_state.setChecked(isCashButtonState);
+//        sw_cashbutton_state.setChecked(!isCashButtonState);
 
     }
 
@@ -99,38 +116,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             CashButtonConfig.actionSuggestion(this);
             // endregion
         }
-
     }
 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView.getId() == R.id.sw_notibar_state) {
-            notibarRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    CashButtonConfig.setCashButtonNotify(isChecked);
-                }
-            };
+            notibarRunnable = () -> CashButtonConfig.setCashButtonNotify(isChecked);
             NotibarWorkRunnable notiR = new NotibarWorkRunnable();
-            Thread t = new Thread(notiR);
-            t.start();
+            Thread t1 = new Thread(notiR);
+            t1.start();
         } else if (buttonView.getId() == R.id.sw_cashbutton_notibar_state) {
-            cashbuttonAndNotibarRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    CashButtonConfig.setCashButtonState(isChecked);
-                }
-            };
+            cashbuttonAndNotibarRunnable = () -> CashButtonConfig.setCashButtonState(isChecked);
             CashbuttonAndNotibarWorkRunnable cashnotiR = new CashbuttonAndNotibarWorkRunnable();
-            Thread t = new Thread(cashnotiR);
-            t.start();
+            Thread t3 = new Thread(cashnotiR);
+            t3.start();
+
         }
+//        else if (buttonView.getId() == R.id.sw_cashbutton_state) {
+//            cashbuttonRunnable = () -> {
+//                if (isChecked) {
+//                    CashButtonConfig.setCashButtonState(false);
+//                    cashButton.setCashButtonShow();
+//                } else {
+//                    cashButton.setCashButtonHide();
+//                }
+//            };
+//            CashbuttonWorkRunnable cashR = new CashbuttonWorkRunnable();
+//            Thread t2 = new Thread(cashR);
+//            t2.start();
+//        }
     }
 
 
     class NotibarWorkRunnable implements Runnable {
-
         @Override
         public void run() {
             runOnUiThread(notibarRunnable);
@@ -139,11 +158,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     class CashbuttonAndNotibarWorkRunnable implements Runnable {
-
         @Override
         public void run() {
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -152,4 +170,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-}
+//    class CashbuttonWorkRunnable implements Runnable {
+//        @Override
+//        public void run() {
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            runOnUiThread(cashbuttonRunnable);
+//        }
+//    }
+
+
+    }
