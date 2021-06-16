@@ -58,17 +58,6 @@ public class HeaderView extends RelativeLayout {
         super.onFinishInflate();
     }
 
-
-    public void setTitle(@StringRes final int stringRes) {
-        tv_header_title.setText(stringRes);
-    }
-
-
-    public void setTitle(@NonNull final String title) {
-        tv_header_title.setText(title);
-    }
-
-
     public void setBack(final OnClickListener listener) {
         ly_header_back.setVisibility(View.VISIBLE);
         ly_header_back.setOnClickListener(listener);
