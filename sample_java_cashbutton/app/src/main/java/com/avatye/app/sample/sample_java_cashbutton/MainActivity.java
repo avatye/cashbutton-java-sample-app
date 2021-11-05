@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(CashButtonLayout cashButtonLayout) {
                 cashButton = cashButtonLayout;
             }
-        });
+        }, false);
 
         component_header_view.setBack(view -> onBackPressed());
     }

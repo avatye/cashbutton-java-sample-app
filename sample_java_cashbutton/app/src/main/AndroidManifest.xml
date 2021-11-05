@@ -58,6 +58,12 @@
         <meta-data
             android:name="avatye_log"
             android:value="true" />
+
+        <!-- add the provider between the application tag -->
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
+            android:authorities="${applicationId}.TTMultiProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
