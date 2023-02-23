@@ -3,6 +3,7 @@ package com.avatye.app.sample.sample_java_cashbutton;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.avatye.sdk.cashbutton.CashButtonConfig;
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initCommon() {
         CashButtonLayout.init(this, new ICashButtonCallback() {
+            @Override
+            public void onDashBoardStateChange(@NonNull CashButtonLayout.State state) {
+
+            }
+
             @Override
             public void onSuccess(CashButtonLayout cashButtonLayout) {
                 cashButton = cashButtonLayout;

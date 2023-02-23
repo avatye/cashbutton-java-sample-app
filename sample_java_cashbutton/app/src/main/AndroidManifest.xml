@@ -19,11 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label">
         <activity
             android:name=".MainActivity"
             tools:ignore="LockedOrientationActivity"
             android:launchMode="singleTop"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,13 +34,7 @@
             </intent-filter>
         </activity>
 
-        <!-- 현재 연동된 키는 테스트 키 이므로 정식 발급된 키로 변경하셔야 정산이 가능합니다.-->
-        <meta-data
-            android:name="avatye_appid"
-            android:value="91e4b7f81a6511ea813d0a4916b2361a" />
-        <meta-data
-            android:name="avatye_appsecret"
-            android:value="aafc702323bf6a214" />
+
         <!-- 마켓 정보를 입력합니다. googleplay or onestore -->
         <meta-data
             android:name="avatye_market"
@@ -46,12 +42,6 @@
         <meta-data
             android:name="com.buzzvil.APP_KEY"
             android:value="app-pub-150484850088628" />
-
-
-        <!-- 앱 검수 로그 설정, 앱 검수를 위해 아래 값을 넣어 전달 바랍니다. -->
-        <meta-data
-            android:name="avatye_log"
-            android:value="true" />
 
     </application>
 
